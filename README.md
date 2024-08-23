@@ -35,6 +35,7 @@ ID, Title, Type can be used instead of NODE.
 - getValues(NODE) => Object
 - setValues(NODE, values)
 - connect(OUTPUT_NODE, OUTPUT_NAME, INPUT_NODE, INPUT_NAME|null)
+- create(TYPE, values) => Node
 - random(min, max) => Number
 - getRandomSeed() => Number
 - enable(NODE) : Bypass
@@ -66,3 +67,4 @@ setValues("Debug", {
 });
 ```
 
+Click the Execute button.  

@@ -41,6 +41,8 @@ function _execNode(node, args) {
     const MINUTES = DATE.getMinutes();
     const SECONDS = DATE.getSeconds();
 
+    const create = (className, values, options) => _createNode.apply(node, [className, values, options]);
+
     eval(COMMAND);
   } catch(err) {
     console.error(err);
@@ -86,6 +88,35 @@ function _unsetAutoQueue() {
       }
     }
   }
+}
+
+const _createNode = function(className, values, options) {
+  values = values ?? {};
+  options = { select: true, shiftY: 0, before: false, ...(options || {}) };
+  const node = LiteGraph.createNode(className);
+  if (!node) {
+    throw new Error(`${className} not found.`);
+  }
+
+  if (node.widgets) {
+    for (const [key, value] of Object.entries(values)) {
+      const widget = node.widgets.find(e => e.name === key);
+      if (widget) {
+        widget.value = value;
+      }
+    }
+  }
+
+  app.graph.add(node);
+
+  if (options.select) {
+    app.canvas.selectNode(node, false);
+  }
+
+  putOnRight(node, this);
+  moveToBottom(node);
+
+  return node;
 }
 
 // methods
