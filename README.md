@@ -34,7 +34,7 @@ ID, Title, Type can be used instead of NODE.
 - findLast(ID|TITLE|TYPE) => Node
 - getValues(NODE) => Object
 - setValues(NODE, values)
-- connect(INPUT_NODE, OUTPUT_NODE, INPUT_NAME, OUTPUT_NAME|null)
+- connect(OUTPUT_NODE, OUTPUT_NAME, INPUT_NODE, INPUT_NAME|null)
 - random(min, max) => Number
 - getRandomSeed() => Number
 - enable(NODE) : Bypass

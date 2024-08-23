@@ -143,9 +143,9 @@ const setValues = function(node, values) {
   }
 }
 
-const connect = function(a, b, outputName, inputName) {
-  a = _toNode(a);
-  b = _toNode(b);
+const connect = function(outputNode, outputName, inputNode, inputName) {
+  outputNode = _toNode(outputNode);
+  inputNode = _toNode(inputNode);
 
   if (!inputName) {
     inputName = outputName;
@@ -154,33 +154,33 @@ const connect = function(a, b, outputName, inputName) {
   outputName = outputName.toUpperCase();
   inputName = inputName.toLowerCase();
 
-  let output = outputName ? a.outputs?.find(e => e.name.toUpperCase() === outputName) : null; // uppercase
+  let output = outputName ? outputNode.outputs?.find(e => e.name.toUpperCase() === outputName) : null; // uppercase
   let outputSlot;
-  let input = inputName ? b.inputs?.find(e => e.name.toLowerCase() === inputName) : null; // lowercase
+  let input = inputName ? inputNode.inputs?.find(e => e.name.toLowerCase() === inputName) : null; // lowercase
   let inputSlot;
 
   if (output) {
-    outputSlot = a.findOutputSlot(output.name);
+    outputSlot = outputNode.findOutputSlot(output.name);
     if (!input) {
-      input = b.inputs?.find(e => e.type === output.type);
+      input = inputNode.inputs?.find(e => e.type === output.type);
       if (input) {
-        inputSlot = b.findInputSlot(input.name);
+        inputSlot = inputNode.findInputSlot(input.name);
       }
     }
   }
 
   if (input) {
-    inputSlot = b.findInputSlot(input.name);
+    inputSlot = inputNode.findInputSlot(input.name);
     if (!output) {
-      output = a.outputs?.find(e => e.type === input.type);
+      output = outputNode.outputs?.find(e => e.type === input.type);
       if (output) {
-        outputSlot = a.findOutputSlot(output.name);
+        outputSlot = outputNode.findOutputSlot(output.name);
       }
     }
   }
 
   if (typeof inputSlot === "number" && typeof outputSlot === "number") {
-    a.connect(outputSlot, b.id, inputSlot);
+    outputNode.connect(outputSlot, inputNode.id, inputSlot);
   }
 }
 
